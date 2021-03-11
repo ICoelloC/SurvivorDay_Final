@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Inicio : MonoBehaviour
 {
     public AudioClip musicaInicio;
+    public AudioClip boton;
     private AudioSource audioSource;
     void Start()
     {
@@ -14,17 +15,19 @@ public class Inicio : MonoBehaviour
 
     public void BotonStart()
     {
+        this.audioSource.PlayOneShot(this.boton);
         SceneManager.LoadScene("Nivel 1");
     }
 
     public void BotonVolver()
     {
+        this.audioSource.PlayOneShot(this.boton);
         SceneManager.LoadScene("Inicio");
     }
 
     public void BotonAcercaDe()
     {
-        // Le decimos a que escena queremos ir
+        this.audioSource.PlayOneShot(this.boton);
         SceneManager.LoadScene("Info Desarrollador");
     }
 }
