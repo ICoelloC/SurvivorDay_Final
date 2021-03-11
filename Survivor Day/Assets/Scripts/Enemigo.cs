@@ -37,8 +37,6 @@ public class Enemigo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
         if (MoveToA)
         {
             if (!mirandoDerecha)
@@ -66,8 +64,6 @@ public class Enemigo : MonoBehaviour
                 MoveToB = false;
             }
         }
-
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
