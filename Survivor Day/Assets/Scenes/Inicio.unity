@@ -1521,6 +1521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicaInicio: {fileID: 8300000, guid: f9bbe59ad0c5dec4cb5d60d0a69e9a1d, type: 3}
+  boton: {fileID: 8300000, guid: 0293a84fd5dd3d842a2a8a0034a373b3, type: 3}
 --- !u!82 &2078611195
 AudioSource:
   m_ObjectHideFlags: 0

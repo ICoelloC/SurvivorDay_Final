@@ -29,9 +29,6 @@ public class Personaje : MonoBehaviour
     private bool moviendoDerecha;
     private bool moviendoIzquierda;
 
-    
-
-    // Start is called before the first frame update
     void Start()
     {
         this.vidas = 1;
@@ -41,7 +38,7 @@ public class Personaje : MonoBehaviour
         this.mirandoIzquierda = false;
         MyRb = GetComponent<Rigidbody2D>();
     }
-    // Update is called once per frame
+
     void Update()
     {
         this.animator.SetBool("Corriendo", false);
@@ -52,12 +49,9 @@ public class Personaje : MonoBehaviour
                 girarPersonaje();
             }
             this.animator.SetBool("Corriendo", true);
-            // Indicamos cuanto queremos que se mueva, no donde..., eje X
             transform.Translate(new Vector3(-this.velocidad, 0.0f));
         }
         
-
-        // Si pulsamos ir a la derecha, o con los botones de la interfaz variable cerrojo
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || this.moviendoDerecha)
         {
             if (mirandoDerecha)
@@ -65,14 +59,11 @@ public class Personaje : MonoBehaviour
                 girarPersonaje();
             }
             this.animator.SetBool("Corriendo", true);
-            // Indicamos cuanto queremos que se mueva, no donde... eje X
             transform.Translate(new Vector3(-this.velocidad, 0.0f));
         }
 
-        // Si queremos saltar
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
-            // saltamos, refactorizado a método propio para eventos de botones
             this.saltar();
         }
         
@@ -83,9 +74,6 @@ public class Personaje : MonoBehaviour
 
     }
 
-
-    // Nos detecta como actuar si hay colisión y choca una vez
-    // Este método se llama cuando colisione con algo por primera vez, por eso filtramos con la etiqueta
     void OnCollisionEnter2D(Collision2D col)
     {
         // Comparamos si colisinamos con objetos con etiqueta Suelo
@@ -101,26 +89,17 @@ public class Personaje : MonoBehaviour
         if (col.gameObject.CompareTag("Enemigo"))
         {
 
-            // Sonido
-            //this.audioSource.PlayOneShot(this.sonidoDaño);
             col.gameObject.SetActive(false);
             Destroy(col.gameObject, 1.0f);
             this.vidas--;
-            // animación
             this.animator.SetTrigger("Daño");
             Debug.Log("Vidas: " + this.vidas);
-            // Si nos quedamos sin vidas
-            // Cuando muedo
             if (this.vidas <= 0)
             {
-                // Sonido
-                //this.audioSource.PlayOneShot(this.sonidoMuerte);
                 Debug.Log("El jugador ha muerto");
                 // Animación
                 this.animator.SetBool("Morir", true);
-                // Comprobamos el record
                 this.comprobarRecord();
-                Destroy(this.gameObject, 0.5f);
 
             }
         }
@@ -129,14 +108,12 @@ public class Personaje : MonoBehaviour
         {
             transform.parent = col.transform;
             this.saltando = false;
-            // Animación
             this.animator.SetBool("Saltando", this.saltando);
         }
 
     }
 
-    // DEsactiva el personaje en X segundos
-    void descativarPersonaje()
+    void inhabilitarPersonaje()
     {
         this.gameObject.SetActive(false);
         Destroy(this.gameObject, 0.5f);
@@ -170,17 +147,11 @@ public class Personaje : MonoBehaviour
 
             if (this.vidas <= 0)
             {
-                // Sonido
-                //this.audioSource.PlayOneShot(this.sonidoMuerte);
                 Debug.Log("El jugador ha muerto");
-                // Animación
                 this.animator.SetBool("Morir", true);
-                // Comprobamos el record
                 this.comprobarRecord();
-                this.descativarPersonaje();
 
             }
-            descativarPersonaje();
         }
 
         if (collision.gameObject.CompareTag("FinNivel1"))
@@ -205,8 +176,6 @@ public class Personaje : MonoBehaviour
 
     private void comprobarRecord()
     {
-        // PlayerPrefs nos deja guardar preferencias o datos en modo clave valor
-        // Podríamos guardar estadísticas y recuperarlas
         int recordUltimo = PlayerPrefs.GetInt("Monedas");
         if (PlayerPrefs.HasKey("Monedas") == false)
         {
@@ -232,10 +201,6 @@ public class Personaje : MonoBehaviour
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0.0f, this.salto));
             this.saltando = true;
             this.animator.SetBool("Saltando", this.saltando);
-            // Sonido
-            //this.audioSource.clip = this.sonidoSalto;
-            //this.audioSource.Play();
-            //this.audioSource.PlayOneShot(this.sonidoSalto);
         }
     }
 
@@ -245,13 +210,11 @@ public class Personaje : MonoBehaviour
         transform.Rotate(0f,180f,0f);
     }
 
-
     public void moverDerecha(bool activar)
     {
         this.moviendoDerecha = activar;
     }
 
-    // Cerrojo de movimiento izquierda
     public void moverIzquierda(bool activar)
     {
         this.moviendoIzquierda = activar;
